@@ -2,7 +2,16 @@
   <div>
     <img src="../assets/v.png" alt />
 
-    <van-search shape="round" background="#4fc08d" placeholder="请输入搜索关键词" />
+    <van-search shape="round" background="#4fc08d" placeholder="请输入搜索关键词" @click="showPopup" />
+
+    <van-popup v-model="show" position="top" :style="{ height: '100%' }">
+      <van-icon name="arrow-left" @click="del" class="fan"/>
+
+      <van-icon name="share" title="分享" @click="showShare = true" class="xiao" />
+      <van-share-sheet v-model="showShare" title="立即分享给好友" :options="options" @select="onSelect" />
+
+      <van-search placeholder="请输入搜索关键词" />
+    </van-popup>
 
     <div class="tab">
       <ul>
@@ -29,15 +38,43 @@
   </div>
 </template>
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
-      iNow: 0
+      iNow: 0,
+      show: false,
+      showShare: false,
+      options: [
+        { name: "微信", icon: "wechat" },
+        { name: "微博", icon: "weibo" },
+        { name: "复制链接", icon: "link" },
+        { name: "分享海报", icon: "poster" },
+        { name: "二维码", icon: "qrcode" }
+      ]
     };
+  },
+  methods: {
+    showPopup() {
+      this.show = true;
+    },
+    del() {
+      this.show = false;
+    },
+    onSelect(option) {
+      Toast(option.name);
+      this.showShare = false;
+    }
   }
 };
 </script>
 <style lang="less">
+.xiao {
+  font-size: 0.25rem;
+}
+.fan {
+  font-size: 0.25rem;
+}
 img {
   width: 4rem;
 }

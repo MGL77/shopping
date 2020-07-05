@@ -5,7 +5,6 @@
     <p @click="backtop" class="p">
       <van-icon name="arrow-up" />
     </p>
-    <p></p>
   </div>
 </template>
 
